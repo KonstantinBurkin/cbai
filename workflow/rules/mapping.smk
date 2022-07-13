@@ -36,7 +36,7 @@ rule map_reads_with_minimap:
         reads=get_trimmed_reads,
         idx=rules.minimap_index.output,
     output: 
-        temp("results/mapped/{sample}-{unit}.sorted.bam"),
+        temp("results/mapped/{sample}-{unit}.sorted.mimimap.bam"),
     log:
         "logs/minimap/{sample}-{unit}.log",
     shell:
@@ -62,7 +62,8 @@ rule map_reads:
 
 rule mark_duplicates:
     input:
-        "results/mapped/{sample}-{unit}.sorted.bam",
+        "results/mapped/{sample}-{unit}.sorted.minimap.bam" if config["processing"]["minimap"] else "results/mapped/{sample}-{unit}.sorted.bam"
+        # "results/mapped/{sample}-{unit}.sorted.bam",
     output:
         bam=temp("results/dedup/{sample}-{unit}.bam"),
         metrics="results/qc/dedup/{sample}-{unit}.metrics.txt",

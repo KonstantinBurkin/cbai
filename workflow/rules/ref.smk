@@ -99,20 +99,13 @@ rule bwa_index:
         "0.74.0/bio/bwa/index"
 
 
-#TODO
 rule minimap_index:
     input:
         "resources/genome.fasta",
     output:
-        multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
         "resources/genome.fasta.mni"
-    log:
-    #     "logs/bwa_index.log",
-    resources:
-    #     mem_mb=369000,
-    cache: True
-    wrapper:
-    #     "0.74.0/bio/bwa/index"
+    shell:
+        "minimap2 -d {output} {input}  "
 
 
 rule get_vep_cache:
