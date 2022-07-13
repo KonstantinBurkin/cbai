@@ -40,7 +40,10 @@ rule map_reads_with_minimap:
     log:
         "logs/minimap/{sample}-{unit}.log",
     shell:
-        "minimap2 -Y -t -ax sr {input.idx} {input.reads} >&2 {log}" 
+        """
+         minimap2 -Y  -ax sr  -R '@RG\\tID:~{wildcards.sample}\\tSM:~{wildcards.sample}\\tPL:BGI>
+         samtools view -b -h results/mapped/test.sam -o {output}
+        """
 
 rule map_reads:
     input:
