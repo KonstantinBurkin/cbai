@@ -30,6 +30,18 @@ rule trim_reads_pe:
         "0.74.0/bio/trimmomatic/pe"
 
 
+#TODO create index
+rule map_reads_with_minimap:
+    input: 
+        reads=get_trimmed_reads,
+        idx=rules.minimap_index.output,
+    output: 
+        temp("results/mapped/{sample}-{unit}.sorted.bam"),
+    log:
+        "logs/minimap/{sample}-{unit}.log",
+    shell:
+        "minimap2 -Y -t -ax sr {input.idx} {input.reads} >&2 {log}" 
+
 rule map_reads:
     input:
         reads=get_trimmed_reads,
