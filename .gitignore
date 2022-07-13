@@ -1,11 +1,14 @@
 *
+!workflow/*
+# !workflow/data
+# !workflow/config/config.yaml
 !scripts
 !scripts/*
 !scripts/common
 !scripts/common/*
 scripts/.snakemake*
 !Snakefile
-!config.yaml
+!config/config.yaml
 !samples.tsv
 !resources
 !resources/*
